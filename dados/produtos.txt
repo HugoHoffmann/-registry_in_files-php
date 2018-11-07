@@ -1,0 +1,6 @@
+{"codigo":"1","descricao":"teclado","valor":"50"}
+           {"codigo":"2","descricao":"mouse","valor":"60"}
+           {"codigo":"4","descricao":"Gabinete","valor":"800"}
+           {"codigo":"5","descricao":"Fone de ouvido","valor":"50"}
+           {"codigo":"6","descricao":"Fonte","valor":"450"}
+           

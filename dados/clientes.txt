@@ -1,0 +1,7 @@
+{"codigo":"1","nome":"Hugo","credito":"500"}
+           {"codigo":"2","nome":"Ana","credito":"1000"}
+           {"codigo":"3","nome":"Tiago","credito":"400"}
+           {"codigo":"4","nome":"Tiago","credito":"555"}
+           {"codigo":"5","nome":"Carlos","credito":"255"}
+           {"codigo":"6","nome":"Lucas","credito":"8000"}
+           
