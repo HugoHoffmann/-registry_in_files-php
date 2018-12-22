@@ -1,11 +1,12 @@
 <?php
+// Uso da constante ENTER para inserÃ§Ã£o de dados em arquivos
     include_once './constantes.inc';
 ?>
 <!DOCTYPE html>
 <html>
     <head>
         <title>Clientes</title>
-        <meta charset="windows-1252">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href='../estilo/estiloClientes.css'>
     </head>
@@ -14,13 +15,15 @@
         <hr>
         <table id='tabela' border="1px">
             <tr>
-                <th>Código</th>
+                <th>CÃ³digo</th>
                 <th>Nome</th>
-                <th>Crédito</th>
-                <th>Ação</th>
+                <th>CrÃ©dito</th>
+                <th>AÃ§Ã£o</th>
             </tr>
         <?php
+            // funcao para geracao da tabela, recebendo como parametro as linhas de dados a serem inseridas na tabela
             function geraTabela($aLinhas){
+                // caso exista linhas, execucao de foreach para leitura das linhas recebidas por parametro
                 if(!empty($aLinhas)){
                     foreach($aLinhas AS $aCliente){
                         echo '  <tr>
@@ -32,34 +35,42 @@
                     }
                 }
             }
+            // codicao para remoÃ§Ã£o de registro de acordo com o cÃ³digo do mesmo
             if(isset($_GET['remove'])){
                 $aRestantes = [];
                 $iCodigo = $_GET['remove'];
+                // getRegistrosArquivo, funcao para recebimento de registros no arquivo
                 $aRegistros = getRegistrosArquivo();
                 foreach($aRegistros AS $aRegistro){
+                    // verificao do codigo do registro a ser removido do arquivo
                     if($iCodigo == $aRegistro['codigo']){
                         unset($aRegistro);
                     }
+                    // armazenamento dos arquivos restantes sem o arquivo removido
                     else{
                         $aRestantes[] = $aRegistro; 
                     }
                         
                 }
                 limpaArquivo();
-                
+                // armazenamento dos arquivos restantes
                 foreach($aRestantes AS $aLinha){
+                    // cada linha de registro e armazenada na variavel codificando o valor para json
                     $sJSON = json_encode($aLinha);
+                    // armazenamento no arquivo txt utilizando a constante de enter e 
+                    //a funcao file_append para que nÃ£o seja sobreescrito nenhum dado
                     file_put_contents('../dados/clientes.txt', $sJSON.ENTER, FILE_APPEND);
                 }
 
             }
-            
+            // funcao para a limpeza do arquivo inteiro
             function limpaArquivo(){
                 file_put_contents('../dados/clientes.txt','');
             }
 
-
+        // funcao para obtencao de todos os registro do arquivo
         function getRegistrosArquivo(){
+            // inicializacao do vetor
             $aRegistrosArquivo = [];
 
             $sConteudo = trim(file_get_contents('../dados/clientes.txt'));
@@ -82,13 +93,13 @@
         <hr>
         <br>
         <form action="index.php?pagina=clientes" method="post">
-            <label for="codigo">Código:<span>*</span></label>
+            <label for="codigo">CÃ³digo:<span>*</span></label>
             <input  type="number" name="codigo" required="required">
             <br>
             <label for="nome">Nome:<span>*</span></label>
             <input type="text" name="nome" required="required">
             <br>
-            <label for="credito">Valor do crédito:<span>*</span></label>
+            <label for="credito">Valor do crÃ©dito:<span>*</span></label>
             <input type="number" name="credito" required="required">
             <hr>
             <input type="reset" value='Limpar'name='limpar' >
@@ -105,7 +116,7 @@
             foreach($aLin AS $sCliente){
                 $aCliente = json_decode($sCliente,true);
                 if($_POST['codigo'] == $aCliente['codigo']){
-                   echo '<h1>Código já existe, insira outro.</h1>';
+                   echo '<h1>CÃ³digo jÃ¡ existe, insira outro.</h1>';
                    die();
                 }
             }
